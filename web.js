@@ -2,7 +2,7 @@
 // Send plain text headers and 'Hello World' to each client
 
 var http = require('http')
-, io = require('socket.io').listen(app);
+, io = require('socket.io').listen(http);
 
 var port = process.env.PORT || 8000;
 
