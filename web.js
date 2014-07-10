@@ -19,7 +19,7 @@ http.createServer(function (req, res) {
 	res.writeHead(200, {'Content-Type': 'text/html'}); // prepare response headers
 
 	if (path == "/") {
-		res.end("Hello Cruel World. I am the requestor edit # " + counter + ".<br><a href='/page2'>Page 2</a>\n");
+		res.end("Hello World. I am the requestor edit # " + counter + ".<br><a href='/page2'>Page 2</a>\n");
 
 	} else if (path == "/page2") {
 		res.end("This is page 2. <a href='/'>Here.</a>\n"); // send response and close connection	
