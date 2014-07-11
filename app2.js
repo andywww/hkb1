@@ -1,7 +1,7 @@
 var app = require('http').createServer(handler);
-//  , io = require('socket.io').listen(app)
-//  , fs = require('fs')
-//  , url = require('url')
+  , io = require('socket.io').listen(app)
+  , fs = require('fs')
+  , url = require('url')
 
 app.listen(process.env.PORT || 8000);
 
