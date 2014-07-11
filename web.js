@@ -26,17 +26,3 @@ http.createServer(function (req, res) {
 	}
 
 }).listen(port);
-
-// console info message
-console.log('Server running at http://127.0.0.1:' + port);
-
-io.sockets.on('connection', function (socket) {
-  //socket.broadcast.emit('news', { hello: 'world' });
-
-  var c = { type : 'handshake', id : socket.id, clientId : clientId };
-  socket.emit('transmit', JSON.stringify(c));
-  c = { type : 'nodehandshake', id : socket.id, clientId : clientId++ };
-  socket.broadcast.emit('transmit', JSON.stringify(c));
-  console.log('connect');
-
- });
