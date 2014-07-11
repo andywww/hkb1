@@ -5,19 +5,16 @@ var app = require('http').createServer(handler)
 
 app.listen(process.env.PORT || 8000);
 
-var counter = 0;
-
 function handler (req, res) {
 
-        var path = req.url;
-  console.log("requested=" + path + " counter=" + counter);
+  fs.readFile(__dirname + req.url,
+        function (err, data) {
+          if (err) {
+            res.writeHead(500);
+            return res.end('Error loading index.html');
+          }
 
-  res.writeHead(200, {'Content-Type': 'text/html'}); // prepare response headers
-
-  if (path == "/") {
-    res.end("Hello World. I am the requestor edit # " + counter + ".<br><a href='/page2'>Page 2</a>\n");
-
-  } else if (path == "/page2") {
-    res.end("This is page 2. <a href='/'>Here.</a>\n"); // send response and close connection 
-  }
+          res.writeHead(200);
+          res.end(data);
+        });
 }
