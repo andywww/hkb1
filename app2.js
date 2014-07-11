@@ -21,7 +21,7 @@ function handler (req, res) {
 
 io.sockets.on('connection', function (socket) {
 
-  var c = { type : 'handshake', id : socket.id, clientId : clientId };
+  var c = { type : 'handshake', id : 'test', clientId : 1 };
   socket.emit('transmit', JSON.stringify(c));
   socket.on('broadcast', function (data) {
     data = JSON.parse(data);

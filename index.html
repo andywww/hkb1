@@ -5,5 +5,19 @@
 </head>
 <body>
 	<p>test</p>
+
+
+
+	<script src='http://code.jquery.com/jquery-1.11.0.min.js'></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+		  var socket = io.connect('http://warm-plains-7612.herokuapp.com/');
+
+		  socket.on('transmit', function (data) {
+		    var instr= JSON.parse(data);
+		  	console.log(instr);
+		  });
+
+	</script>
 </body>
 </html>
