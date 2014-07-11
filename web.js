@@ -25,3 +25,6 @@ http.createServer(function (req, res) {
 	}
 
 }).listen(port);
+
+
+var io = require('socket.io').listen(http);
