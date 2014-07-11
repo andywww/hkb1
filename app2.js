@@ -26,6 +26,6 @@ io.sockets.on('connection', function (socket) {
   socket.on('broadcast', function (data) {
     data = JSON.parse(data);
     socket.broadcast.emit('transmit', JSON.stringify(data));
-  }
+  });
 
 });
