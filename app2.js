@@ -5,6 +5,7 @@ var app = require('http').createServer(handler);
 
 app.listen(process.env.PORT || 8000);
 
+var counter = 0;
 
 function handler (req, res) {
 
