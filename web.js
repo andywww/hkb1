@@ -1,8 +1,7 @@
 // Create a HTTP server on port 8000
 // Send plain text headers and 'Hello World' to each client
 
-var http = require('http')
-, io = require('socket.io').listen(http);
+var http = require('http');
 
 var port = process.env.PORT || 8000;
 
