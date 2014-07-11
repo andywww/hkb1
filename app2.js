@@ -18,3 +18,14 @@ function handler (req, res) {
           res.end(data);
         });
 }
+
+io.sockets.on('connection', function (socket) {
+
+  var c = { type : 'handshake', id : socket.id, clientId : clientId };
+  socket.emit('transmit', JSON.stringify(c));
+  socket.on('broadcast', function (data) {
+    data = JSON.parse(data);
+    socket.broadcast.emit('transmit', JSON.stringify(data));
+  }
+
+});
