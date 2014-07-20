@@ -1,0 +1,42 @@
+<html>
+  <head>
+  	
+
+  </head>
+  <body>
+ 
+
+	<div id="info">
+
+	</div>
+
+
+
+  <script src='http://code.jquery.com/jquery-1.11.0.min.js'></script>
+		<script src="http://192.168.1.73:3000/socket.io/socket.io.js"></script>
+		<script>
+		  var socket = io.connect('http://192.168.1.73:3000');
+
+
+		  socket.on('transmit', function (data) {
+		    var instr= JSON.parse(data);
+		  	//console.log(instr);
+		  	if(instr.type=="nodehandshake"){
+		  		thisNodeId = instr.clientId;
+		        console.log('node ' + thisNodeId + 'connected');
+		        var c = { type : 'paddle', id : thisNodeId };
+		  			socket.emit('broadcast', JSON.stringify(c));
+		    	}
+
+		  });
+
+		  socket.on('paddle', function (data) {
+		  		var instr= JSON.parse(data);
+		  		$('#info').html(instr.id);
+		  });
+
+
+
+		</script>
+	</body>
+</html>

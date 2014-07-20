@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+		html, body{ position: fixed; top: 0; bottom: 0; left: 0; right: 0; background: yellow; }
+		.scrollable {
+		    overflow: auto;
+		    overflow-x: hidden;
+		    -webkit-overflow-scrolling: touch;
+		}
+		.scrollable * {
+		    -webkit-transform: translate3d(0,0,0);
+		}
+		#info{ position: fixed; top: 0; bottom: 0; left: 0; right: 0; }
+	</style>
+</head>
+<body id="area">
+
+<div id="info"></div>
+
+		<script src='http://code.jquery.com/jquery-1.11.0.min.js'></script>
+		<script src="http://192.168.1.73:3000/socket.io/socket.io.js"></script>
+		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/hammer.js/1.0.5/hammer.js"></script>
+		<script>
+
+		var socket = io.connect('http://192.168.1.73:3000');
+
+
+		
+
+
+		  socket.on('transmit', function (data) {
+		  	var instr= JSON.parse(data);
+		  	//console.log(instr);
+		  	if(instr.type=="handshake"){
+		  		thisNodeId = instr.clientId;
+		        console.log('hi i am node ' + thisNodeId);
+		        $('#myName').html(thisNodeId);
+
+
+		    }
+
+
+		  });
+
+		  var positions = 'none';
+		  var oldepositions = 'none';
+
+		  		        (function animloop(){
+
+					requestAnimationFrame(animloop);
+
+					if(positions!=oldepositions){
+					var c = { type : 'update', id : positions };
+			  		socket.emit('broadcast', JSON.stringify(c));
+			  	}
+
+				})();
+
+
+		// Uses document because document will be topmost level in bubbling
+$(document).on('touchmove',function(e){
+  e.preventDefault();
+});
+
+
+var scrolling = false;
+
+// Uses body because jquery on events are called off of the element they are
+// added to, so bubbling would not work if we used document instead.
+$('body').on('touchstart','.scrollable',function(e) {
+    // Only execute the below code once at a time
+    if (!scrolling) {
+        scrolling = true;   
+        if (e.currentTarget.scrollTop === 0) {
+          e.currentTarget.scrollTop = 1;
+        } else if (e.currentTarget.scrollHeight === e.currentTarget.scrollTop + e.currentTarget.offsetHeight) {
+          e.currentTarget.scrollTop -= 1;
+        }
+        scrolling = false;
+    }
+});
+
+// Prevents preventDefault from being called on document if it sees a scrollable div
+$('body').on('touchmove','.scrollable',function(e) {
+	e.stopPropagation();
+});
+
+var x1, y1;
+var element = document.getElementById("info");
+Hammer(element).on("drag touch", function(e){
+    //console.log(e);
+
+    x1 = e.gesture.touches[0].pageX;
+    y1 = e.gesture.touches[0].pageY;
+
+    positions = x1 + " " + y1;
+    document.getElementById("info").innerHTML = positions;
+
+});
+
+
+		</script>
+	</body>
+</html>
