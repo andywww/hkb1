@@ -19,14 +19,18 @@
 
 
 		  socket.on('transmit', function (data) {
-		    var instr= JSON.parse(data);
+		  	var instr= JSON.parse(data);
 		  	//console.log(instr);
-		  	if(instr.type=="nodehandshake"){
+		  	if(instr.type=="handshake"){
 		  		thisNodeId = instr.clientId;
-		        console.log('node ' + thisNodeId + 'connected');
-		        var c = { type : 'paddle', id : thisNodeId };
-		  			socket.emit('broadcast', JSON.stringify(c));
-		    	}
+		        console.log('hi i am node ' + thisNodeId);
+		        $('#myName').html(thisNodeId);
+
+
+		    }
+		    if(instr.type=="update"){
+		    	$('#info').html(instr.id);
+		    }
 
 		  });
 
